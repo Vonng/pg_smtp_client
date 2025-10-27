@@ -5,7 +5,7 @@ mod guc;
 pg_module_magic!();
 
 #[pg_guard]
-pub extern "C" fn _PG_init() {
+pub extern "C-unwind" fn _PG_init() {
     guc::init();
 }
 
@@ -172,7 +172,6 @@ mod smtp_client {
     }
 
     #[cfg(any(test, feature = "pg_test"))]
-    #[pg_schema]
     mod tests {
         use super::*;
         use std::collections::HashMap;
